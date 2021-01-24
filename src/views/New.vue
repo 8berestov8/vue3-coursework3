@@ -16,13 +16,13 @@
       <textarea id="description" v-model="descTask"></textarea>
     </div>
     
-    <button class="btn primary">Создать</button>
+    <button class="btn primary" :disabled="disabled">Создать</button>
   </form>
 </template>
 
 
 <script>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import {useStore} from 'vuex'
 import {useRouter} from 'vue-router'
 
@@ -32,13 +32,17 @@ export default {
     const dateTask = ref('')
     const descTask = ref('')
     const status = ref('')
-    
+  
     const store = useStore()
     const router = useRouter()
-    
+  
+    const disabled =  computed(() => {
+      return nameTask.value.length && dateTask.value.length && descTask.value.length ? false : true
+    })
+  
     function onSubmit() {
       status.value = 'active'
-      
+    
       const tasks = {
         name: nameTask.value,
         date: dateTask.value,
@@ -48,11 +52,13 @@ export default {
       store.dispatch('saveTask', tasks)
       router.push('/home')
     }
-    
+  
+  
     return {
       nameTask,
       dateTask,
       descTask,
+      disabled,
       onSubmit
     }
   }
