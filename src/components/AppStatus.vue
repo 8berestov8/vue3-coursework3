@@ -27,7 +27,6 @@ export default {
       status = 'Выполняется'
       color = 'warning'
     }
-
     return {
       status,
       color

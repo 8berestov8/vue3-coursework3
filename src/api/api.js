@@ -10,5 +10,8 @@ export default {
     post(data) {
       return axios.post(baseUrl, data)
     },
+    put(data) {
+      return axios.put(baseUrl, data)
+    }
   }
 }

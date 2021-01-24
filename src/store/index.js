@@ -39,6 +39,16 @@ export default createStore({
         console.log(error)
       }
     },
+    changeStatus: async (context, payload) => {
+      try {
+        context.commit('updateTask', payload)
+        console.log(await api.tasks.put(payload))
+        // await api.tasks.put(payload)
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
   },
   modules: {}
 })

@@ -23,7 +23,7 @@ import AppStatus from '../components/AppStatus'
 import {useRoute} from 'vue-router'
 import {useStore} from 'vuex'
 
-import {ref, watch, computed} from 'vue'
+import {ref} from 'vue'
 
 
 export default {
