@@ -23,7 +23,7 @@ import AppStatus from '../components/AppStatus'
 import {useRoute} from 'vue-router'
 import {useStore} from 'vuex'
 
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 
 
 export default {
@@ -31,13 +31,18 @@ export default {
     const route = useRoute()
     const store = useStore()
     let task = ref('')
-    
+  
     task = store.state.tasks.filter((e) => e.id === route.params.id)
-    
+  
     function pending() {
       task[0].status = 'pending'
+      store.dispatch('changeStatus', task)
     }
-    
+  
+    computed(() => {
+      return
+    })
+  
     return {
       task,
       pending

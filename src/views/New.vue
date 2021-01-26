@@ -5,17 +5,17 @@
       <label for="title">Название</label>
       <input type="text" id="title" v-model="nameTask">
     </div>
-    
+  
     <div class="form-control">
       <label for="date">Дата дэдлайна</label>
       <input type="date" id="date" v-model="dateTask">
     </div>
-    
+  
     <div class="form-control">
       <label for="description">Описание</label>
       <textarea id="description" v-model="descTask"></textarea>
     </div>
-    
+  
     <button class="btn primary" :disabled="disabled">Создать</button>
   </form>
 </template>
@@ -36,12 +36,17 @@ export default {
     const store = useStore()
     const router = useRouter()
   
-    const disabled =  computed(() => {
+    const disabled = computed(() => {
       return nameTask.value.length && dateTask.value.length && descTask.value.length ? false : true
     })
   
+  
     function onSubmit() {
-      status.value = 'active'
+      if (dateTask.value >= new Date().toISOString().split('T')[0]) {
+        status.value = 'active'
+      } else {
+        status.value = 'cancelled'
+      }
     
       const tasks = {
         name: nameTask.value,
@@ -49,6 +54,7 @@ export default {
         desc: descTask.value,
         status: status.value
       }
+    
       store.dispatch('saveTask', tasks)
       router.push('/home')
     }

@@ -42,8 +42,7 @@ export default createStore({
     changeStatus: async (context, payload) => {
       try {
         context.commit('updateTask', payload)
-        console.log(await api.tasks.put(payload))
-        // await api.tasks.put(payload)
+        // await api.tasks.put(context.state.tasks)
 
       } catch (error) {
         console.log(error)
