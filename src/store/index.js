@@ -28,7 +28,7 @@ export default createStore({
         })
         context.commit('setTasks', items)
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
     },
     saveTask: async (context, payload) => {
@@ -41,10 +41,8 @@ export default createStore({
     },
     changeStatus: async (context, payload) => {
       try {
-
         const {data} = await api.tasks.put(payload)
-        console.log(data)
-
+        // console.log(data)
       } catch (error) {
         console.log(error)
       }

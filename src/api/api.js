@@ -11,7 +11,8 @@ export default {
       return axios.post(baseUrl, data)
     },
     put(data) {
-      return axios.put(baseUrl, data)
+      // Нет понимания как отправлять запросы по обновлению
+      return axios.put(baseUrl + '/' + data.id, {data})
     }
   }
 }
