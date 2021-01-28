@@ -6,30 +6,25 @@
 
 <script>
 
-import {ref} from 'vue'
+import {computed} from 'vue'
 
 export default {
   props: ['type'],
   setup(props) {
-    let status = ref('')
-    let color = ref('')
   
-    if (props.type == 'active') {
-      status = 'Активен'
-      color = 'primary'
-    } else if (props.type == 'done'){
-      status = 'Завершен'
-      color = 'primary'
-    }else if (props.type == 'cancelled'){
-      status = 'Отменен'
-      color = 'danger'
-    }else if (props.type == 'pending'){
-      status = 'Выполняется'
-      color = 'warning'
-    }
     return {
-      status,
-      color
+      status: computed(() =>
+        props.type == 'active' ? 'Активен' : '' ||
+        props.type == 'done' ? 'Завершен' : '' ||
+        props.type == 'cancelled' ? 'Отменен' : '' ||
+        props.type == 'pending' ? 'Выполняется' : ''
+      ),
+      color: computed(() =>
+        props.type == 'active' ? 'primary' : '' ||
+        props.type == 'done' ? 'primary' : '' ||
+        props.type == 'cancelled' ? 'danger' : '' ||
+        props.type == 'pending' ? 'warning' : ''
+      )
     }
   },
 }

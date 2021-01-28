@@ -48,14 +48,14 @@ export default {
         status.value = 'cancelled'
       }
     
-      const tasks = {
+      const task = {
         name: nameTask.value,
         date: dateTask.value,
         desc: descTask.value,
         status: status.value
       }
-    
-      store.dispatch('saveTask', tasks)
+  
+      store.dispatch('saveTask', task)
       router.push('/home')
     }
   

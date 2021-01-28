@@ -10,11 +10,11 @@ export default createStore({
   },
   getters: {
     tasks: state => state.tasks,
+
   },
   mutations: {
     setTasks: (state, payload) => (state.tasks = payload),
     addTask: (state, payload) => (state.tasks.push(payload)),
-    updateTask: (state, payload) => (state.tasks.push(payload)),
   },
   actions: {
     getTasks: async context => {
@@ -41,8 +41,9 @@ export default createStore({
     },
     changeStatus: async (context, payload) => {
       try {
-        context.commit('updateTask', payload)
-        // await api.tasks.put(context.state.tasks)
+
+        const {data} = await api.tasks.put(payload)
+        console.log(data)
 
       } catch (error) {
         console.log(error)

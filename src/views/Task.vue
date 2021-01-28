@@ -7,9 +7,9 @@
     <p><strong>Дэдлайн</strong>: {{ item.date }}</p>
     <p><strong>Описание</strong>: {{ item.desc }}</p>
     <div>
-      <button class="btn" @click="pending">Взять в работу</button>
-      <button class="btn primary" @click="item.status = 'done'">Завершить</button>
-      <button class="btn danger" @click="item.status = 'cancelled'">Отменить</button>
+      <button class="btn" @click="pending(item)">Взять в работу</button>
+      <button class="btn primary" @click="done(item)">Завершить</button>
+      <button class="btn danger" @click="cancelled(item)">Отменить</button>
     </div>
   </div>
   <h3 class="text-white center" v-else>
@@ -23,29 +23,34 @@ import AppStatus from '../components/AppStatus'
 import {useRoute} from 'vue-router'
 import {useStore} from 'vuex'
 
-import {computed, ref} from 'vue'
+import {computed} from 'vue'
 
 
 export default {
   setup() {
     const route = useRoute()
     const store = useStore()
-    let task = ref('')
   
-    task = store.state.tasks.filter((e) => e.id === route.params.id)
-  
-    function pending() {
-      task[0].status = 'pending'
-      store.dispatch('changeStatus', task)
+    function pending(item) {
+      item.status = 'pending'
+      store.dispatch('changeStatus', item)
     }
   
-    computed(() => {
-      return
-    })
+    function done(item) {
+      item.status = 'done'
+      store.dispatch('changeStatus', item)
+    }
+  
+    function cancelled(item) {
+      item.status = 'cancelled'
+      store.dispatch('changeStatus', item)
+    }
   
     return {
-      task,
-      pending
+      task: computed(() => store.getters.tasks.filter((e) => e.id === route.params.id)),
+      pending,
+      done,
+      cancelled
     }
   },
   components: {AppStatus}

@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-white center" v-if="tasks.length == ''">Задач пока нет</h1>
+  <h1 class="text-white center" v-if="!flag"> Задач пока нет</h1>
   
   <template v-for="task in tasks" v-else>
     <h3 class="text-white">Всего активных задач: {{ activeTask.length }}</h3>
@@ -24,6 +24,7 @@
 import AppStatus from '../components/AppStatus'
 
 import {useStore} from 'vuex'
+import {computed, onMounted} from 'vue'
 
 
 export default {
@@ -31,12 +32,15 @@ export default {
     const store = useStore()
     const tasks = store.state
   
-    const activeTask = store.state.tasks.filter(e => e.status == 'active')
+    onMounted(() => {
+      store.dispatch('getTasks')
+    })
+  
   
     return {
-      getTasks: store.dispatch('getTasks'),
       tasks,
-      activeTask
+      activeTask: computed(() => store.getters.tasks.filter(e => e.status === 'active')),
+      flag: computed(() => store.getters.tasks.length)
     }
   },
   components: {AppStatus}
